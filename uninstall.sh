@@ -1,3 +1,9 @@
-[ -d "/data/system/taichi" ] && rm -rf /data/system/taichi 2>/dev/null
-[ -f "/data/misc/taichi" ] && rm -f /data/misc/taichi 2>/dev/null
-[ -f "/data/local/tmp/taichi.log" ] && rm -f /data/local/tmp/taichi.log 2>/dev/null
+SYSTEM_DIR="/data/system/taichi"
+WATCH_FILE="/data/misc/taichi"
+ENFORCE_FILE="/data/misc/taichi_enforce"
+LOG_FILE="/data/local/tmp/taichi.log"
+
+rm -rf "${SYSTEM_DIR}"
+rm -f "${WATCH_FILE}"
+rm -f "${ENFORCE_FILE}"
+rm -f "${LOG_FILE}"
