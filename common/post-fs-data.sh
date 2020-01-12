@@ -12,9 +12,9 @@ ENFORCE_FILE="/data/misc/taichi_enforce"
 LOG_FILE="/data/local/tmp/taichi.log"
 SEPOLICY_FILE="${MODDIR}/sepolicy.rule"
 
-rm -f "{WATCH_FILE}"
-rm -f "{ENFORCE_FILE}"
-rm -f "{LOG_FILE}"
+rm -f "{WATCH_FILE}" 2>/dev/null
+rm -f "{ENFORCE_FILE}" 2>/dev/null
+rm -f "{LOG_FILE}" 2>/dev/null
 
 # Load utility functions
 [ -f "/data/adb/magisk/util_functions.sh" ] && . /data/adb/magisk/util_functions.sh
@@ -22,13 +22,13 @@ rm -f "{LOG_FILE}"
 
 AB_UPDATE=$(getprop ro.build.ab_update)
 grep ' / ' /proc/mounts | grep -qv 'rootfs' && SAR="true" || SAR="false"
-[ "${AB_UPDATE}" != "true" ] || ([ "${AB_UPDATE}" == "true" ] && [ "${SAR}" == "false" ]) && ENFORCE="true" || ENFORCE="false"
+[ "${AB_UPDATE}" != "true" ] || ([ "${AB_UPDATE}" == "true" ] && [ "${SAR}" == "false" ]) && SETENFORCE="true" || SETENFORCE="false"
 
-if ([ $(getprop ro.build.version.sdk) -ge 29 ] && [ "${ENFORCE}" == "true" ]) || [ ! -f "${SEPOLICY_FILE}" ]; then
-  touch "${ENFORCE_FILE}" >&2
+if ([ $(getprop ro.build.version.sdk) -ge 29 ] && [ "${SETENFORCE}" == "true" ]) || [ ! -f "${SEPOLICY_FILE}" ]; then
+  touch "${ENFORCE_FILE}" 2>/dev/null
   setenforce 0
 else
   grep -v '^#' < "${SEPOLICY_FILE}" | while read RULE; do
-    magiskpolicy --live "${RULE}"
+    magiskpolicy --live "${RULE}" 2>/dev/null
   done
 fi

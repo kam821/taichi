@@ -19,9 +19,9 @@ while [ ! -f "${WATCH_FILE}" ] && [ "$timeout" -gt 0 ]; do
 done
 
 if [ ! -f "${WATCH_FILE}" ]; then
-  setprop ctl.restart zygote_secondary >&2
+  setprop ctl.restart zygote_secondary 2>/dev/null
 else
-  rm -f "${WATCH_FILE}"
+  rm -f "${WATCH_FILE}" 2>/dev/null
 fi
 
 until [ $(getprop sys.boot_completed) -eq 1 ]; do
@@ -29,6 +29,6 @@ until [ $(getprop sys.boot_completed) -eq 1 ]; do
 done
 
 if [ -f "${ENFORCE_FILE}" ]; then
-  rm -f "${ENFORCE_FILE}"
+  rm -f "${ENFORCE_FILE}" 2>/dev/null
   setenforce 1
 fi

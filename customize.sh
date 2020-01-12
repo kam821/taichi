@@ -24,8 +24,8 @@ on_install() {
 set_permissions() {
   ui_print "- Setting permissions"
   # The following is the default rule, DO NOT remove
-  set_perm_recursive $MODPATH  0  0  0755  0644
-  # set_perm  $MODPATH/system/lib/libmedia_legacy.so    0    0    0644    u:object_r:system_lib_file:s0
+  set_perm_recursive $MODPATH 0 0 0755 0644
+  # set_perm $MODPATH/system/lib/libmedia_legacy.so  0  0  0644  u:object_r:system_lib_file:s0
 }
 
 SKIPUNZIP=1
